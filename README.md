@@ -6,6 +6,45 @@ This terraform module pulls down the [nickshine/lambda-edge-azure-auth] pre-pack
 function (using a [local-exec] provisioner with __curl__), generates the required `config.json`
 file based on the configured input variables, zips and creates the lambda function in AWS.
 
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:-----:|
+| `client_id` | Microsoft Azure AD Application ID | `string` | | yes |
+| `client_secret` | Microsoft Azure AD Client Secret | `string` | | yes |
+| `function_name` | Name for the lambda function | `string` | `lambda-edge-azure-auth` | no |
+| `lambda_role_name` | Name for the lambda IAM role | `string` | `lambda-edge-azure-auth-role` | no |
+| `lambda_policy_name` | Name for the lambda IAM policy | `string` | `lambda-edge-azure-auth-policy` | no |
+| `redirect_uri` | Registered Microsoft Azure AD Application Redirect URI | `string` | | yes |
+| `session_duration` | Authenticated session duration, in hours | `number` | `168` | no |
+| `tags` | Tags to attach to the lambda | `map(string)` | `{}` | no |
+| `tenant` | Microsoft Azure AD Tenant ID | `string` | | yes |
+
+## Outputs
+
+| Name | Description | Sensitive |
+|------|-------------| :-------: |
+| `client_id` | Microsoft Azure AD Application ID | no |
+| `client_secret` | Microsoft Azure AD Client Secret | yes |
+| `public_key` | RSA Public Key generated for the lambda@edge function `config.json` | no |
+| `public_key_openssh` | RSA Public Key generated for the lambda@edge function `config.json` | no |
+| `private_key` | RSA Private Key generated for the lambda@edge function `config.json` | yes |
+| `session_duration` | Auth session duration in seconds | no |
+
+## Usage
+
+```hcl
+module "lambda-edge-azure-auth" {
+  source = "../"
+
+  client_id     = var.client_id
+  client_secret = var.client_secret
+  tenant        = var.tenant
+  redirect_uri  = var.redirect_uri
+  tags          = var.tags
+}
+```
+
 Example generated `config.json`:
 
 ```json
@@ -23,7 +62,7 @@ Example generated `config.json`:
       "redirect_uri": "http://localhost:1313/_callback",
       "client_secret": "xxxxx-xxxx-xxxx-xxxx-xxxxxxxx"
   },
-  "DISTRIBUTION": "demo",
+  "DISTRIBUTION": "lambda-edge-azure-auth",
   "PRIVATE_KEY": "-----BEGIN RSA PRIVATE KEY-----\nxxxxxxxxxx\n-----END RSA PRIVATE KEY-----\n",
   "PUBLIC_KEY": "-----BEGIN PUBLIC KEY-----\nxxxxxxxxxxxxxxxxxxxxx\n-----END PUBLIC KEY-----\n",
   "TENANT": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",

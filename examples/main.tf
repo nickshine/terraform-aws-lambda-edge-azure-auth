@@ -9,6 +9,5 @@ module "lambda-edge-azure-auth" {
   client_secret = var.client_secret
   tenant        = var.tenant
   redirect_uri  = var.redirect_uri
-
-  tags = var.tags
+  tags          = var.tags
 }
