@@ -2,7 +2,11 @@
 
 >Terraform module for [nickshine/lambda-edge-azure-auth].
 
-Example config.json:
+This terraform module pulls down the [nickshine/lambda-edge-azure-auth] pre-packaged lambda
+function (using a [local-exec] provisioner with __curl__), generates the required `config.json`
+file based on the configured input variables, zips and creates the lambda function in AWS.
+
+Example generated `config.json`:
 
 ```json
 {
@@ -30,3 +34,4 @@ Example config.json:
 ```
 
 [nickshine/lambda-edge-azure-auth]:https://github.com/nickshine/lambda-edge-azure-auth
+[local-exec]:https://www.terraform.io/docs/provisioners/local-exec.html
