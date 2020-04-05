@@ -1,0 +1,24 @@
+${jsonencode({
+    AUTH_REQUEST = {
+        client_id = "${client_id}"
+        redirect_uri = "${redirect_uri}"
+        response_type = "code"
+        response_mode = "query"
+        scope = "openid email profile"
+    }
+
+    TOKEN_REQUEST = {
+        client_id = "${client_id}"
+        grant_type = "authorization_code"
+        redirect_uri = "${redirect_uri}"
+        client_secret = "${client_secret}"
+    }
+
+    DISTRIBUTION = "lambda-edge-azure-auth"
+    PRIVATE_KEY = "${private_key}"
+    PUBLIC_KEY = "${public_key}"
+    TENANT = "${tenant}"
+    DISCOVERY_DOCUMENT = "${discovery_document}"
+    SESSION_DURATION = "${session_duration}"
+    CALLBACK_PATH = "${callback_path}"
+})}
