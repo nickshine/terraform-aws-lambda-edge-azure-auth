@@ -4,7 +4,26 @@
 
 This terraform module pulls down the [nickshine/lambda-edge-azure-auth] pre-packaged lambda
 function (using a [local-exec] provisioner with __curl__), generates the required `config.json`
-file based on the configured input variables, zips and creates the lambda function in AWS.
+file based on the configured input variables, packages and creates the lambda function in AWS.
+
+>Minimal dependecies required for Terraform environment (e.g. Terraform Cloud/Enterprise)
+>
+>* only `curl` and `unzip` needed
+>* `node` __not__ required in Terraform environment to generate config
+
+## Usage
+
+```hcl
+module "lambda-edge-azure-auth" {
+  source = "nickshine/lambda-edge-azure-auth/aws"
+  version = "0.1.0"
+
+  client_id     = var.client_id
+  client_secret = var.client_secret
+  tenant        = var.tenant
+  redirect_uri  = var.redirect_uri
+}
+```
 
 ## Inputs
 
@@ -31,21 +50,9 @@ file based on the configured input variables, zips and creates the lambda functi
 | `private_key` | RSA Private Key generated for the lambda@edge function `config.json` | yes |
 | `session_duration` | Auth session duration in seconds | no |
 
-## Usage
+---
 
-```hcl
-module "lambda-edge-azure-auth" {
-  source = "../"
-
-  client_id     = var.client_id
-  client_secret = var.client_secret
-  tenant        = var.tenant
-  redirect_uri  = var.redirect_uri
-  tags          = var.tags
-}
-```
-
-Example generated `config.json`:
+Example generated `config.json` (gets added to the lambda package):
 
 ```json
 {
