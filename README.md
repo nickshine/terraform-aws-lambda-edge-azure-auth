@@ -1,6 +1,8 @@
 # terraform-aws-lambda-edge-azure-auth
 
->Terraform module for [nickshine/lambda-edge-azure-auth].
+>[nickshine/lambda-edge-azure-auth/aws][lambda-edge-azure-auth-terraform-registry]
+
+Terraform module for [nickshine/lambda-edge-azure-auth].
 
 This terraform module pulls down the [nickshine/lambda-edge-azure-auth] pre-packaged lambda
 function (using a [local-exec] provisioner with __curl__), generates the required `config.json`
@@ -81,3 +83,4 @@ Example generated `config.json` (gets added to the lambda package):
 
 [nickshine/lambda-edge-azure-auth]:https://github.com/nickshine/lambda-edge-azure-auth
 [local-exec]:https://www.terraform.io/docs/provisioners/local-exec.html
+[lambda-edge-azure-auth-terraform-registry]:https://registry.terraform.io/modules/nickshine/lambda-edge-azure-auth/aws
