@@ -4,7 +4,7 @@
 
 This terraform module pulls down the [nickshine/lambda-edge-azure-auth] pre-packaged lambda
 function (using a [local-exec] provisioner with __curl__), generates the required `config.json`
-file based on the configured input variables, packages and creates the lambda function in AWS.
+file based on the configured input variables, packages and then creates the lambda function in AWS.
 
 >Minimal dependecies required for Terraform environment (e.g. Terraform Cloud/Enterprise)
 >
