@@ -13,6 +13,26 @@ output "client_secret" {
   # sensitive   = true
 }
 
+output "lambda_arn" {
+  description = "The Amazon Resource Name (ARN) identifying the Lambda Function."
+  value       = aws_lambda_function.this.arn
+}
+
+output "lambda_role_arn" {
+  description = "ARN of the Lambda role"
+  value       = aws_iam_role.lambda-role.arn
+}
+
+output "lambda_qualified_arn" {
+  description = "Qualified ARN of the lambda function version"
+  value       = aws_lambda_function.this.qualified_arn
+}
+
+output "lambda_version" {
+  description = "Latest published version of the Lambda@Edge function"
+  value       = aws_lambda_function.this.version
+}
+
 output "public_key" {
   description = "RSA Public Key generated for the lambda@edge function config.json"
   value       = tls_private_key.key_pair.public_key_pem

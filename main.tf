@@ -69,13 +69,11 @@ resource "aws_lambda_function" "this" {
   ]
   filename         = "${path.module}/lambda.zip"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-  # source_code_hash = filebase64sha256(data.null_data_source.copy_lambda_sync.outputs["file"])
-  # source_code_hash = filebase64sha256("${path.module}/lambda.zip")
-  function_name = var.function_name
-  role          = aws_iam_role.lambda-role.arn
-  handler       = "index.handler"
-  runtime       = "nodejs12.x"
-  publish       = true
+  function_name    = var.function_name
+  role             = aws_iam_role.lambda-role.arn
+  handler          = "index.handler"
+  runtime          = "nodejs12.x"
+  publish          = true
 
   tags = var.tags
 }
