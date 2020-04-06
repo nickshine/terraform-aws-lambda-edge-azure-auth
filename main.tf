@@ -9,15 +9,15 @@ locals {
 
 resource "null_resource" "copy_lambda" {
   triggers = {
-    file_exists = fileexists("${path.module}/${local.lambda_filename}")
+    always = "${timestamp()}"
   }
 
   provisioner "local-exec" {
     command = <<EOF
-if [ ! -d "${path.module}/lambda" ] && [ ! -L "${path.module}/lambda" ]; then
+if [ ! -f "${path.module}/${local.lambda_filename}" ]; then
   curl -L ${local.lambda_repo}/releases/download/v${local.lambda_version}/${local.lambda_filename} -o ${path.module}/${local.lambda_filename}
-  unzip -q ${path.module}/${local.lambda_filename} -d ${path.module}/lambda/
 fi
+unzip -qo ${path.module}/${local.lambda_filename} -d ${path.module}/lambda/
 EOF
   }
 }
@@ -34,7 +34,8 @@ resource "local_file" "config" {
     session_duration   = local.session_duration
     tenant             = var.tenant
   })
-  filename = "${path.module}/lambda/config.json"
+  filename        = "${path.module}/lambda/config.json"
+  file_permission = "0644"
 
   depends_on = [
     null_resource.copy_lambda,
