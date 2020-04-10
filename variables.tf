@@ -47,3 +47,15 @@ variable "tenant" {
   description = "Microsoft Azure AD Tenant ID"
   type        = string
 }
+
+variable "trailing_slash_redirects_enabled" {
+  description = "Enables 301 redirects for directory paths not ending in a forward slash. e.g. www.example.com/about -> www.example.com/about/"
+  type        = bool
+  default     = false
+}
+
+variable "simple_urls_enabled" {
+  description = "Appends index.html on to directory paths (e.g. www.example.com/about/ retrieves www.example.com/about/index.html from a backend s3 origin.)"
+  type        = bool
+  default     = true
+}

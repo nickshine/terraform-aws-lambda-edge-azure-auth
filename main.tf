@@ -1,5 +1,5 @@
 locals {
-  lambda_version          = "0.2.0"
+  lambda_version          = "0.3.0"
   lambda_filename         = "lambda-edge-azure-auth-${local.lambda_version}.zip"
   lambda_repo             = "https://github.com/nickshine/lambda-edge-azure-auth"
   oidc_discovery_document = "https://login.microsoftonline.com/${var.tenant}/v2.0/.well-known/openid-configuration"
@@ -24,15 +24,17 @@ EOF
 
 resource "local_file" "config" {
   content = templatefile("${path.module}/config.tmpl", {
-    callback_path      = local.callback_path
-    client_id          = var.client_id
-    client_secret      = var.client_secret
-    discovery_document = local.oidc_discovery_document
-    private_key        = tls_private_key.key_pair.private_key_pem
-    public_key         = tls_private_key.key_pair.public_key_pem
-    redirect_uri       = var.redirect_uri
-    session_duration   = local.session_duration
-    tenant             = var.tenant
+    callback_path                    = local.callback_path
+    client_id                        = var.client_id
+    client_secret                    = var.client_secret
+    discovery_document               = local.oidc_discovery_document
+    private_key                      = tls_private_key.key_pair.private_key_pem
+    public_key                       = tls_private_key.key_pair.public_key_pem
+    redirect_uri                     = var.redirect_uri
+    session_duration                 = local.session_duration
+    tenant                           = var.tenant
+    trailing_slash_redirects_enabled = var.trailing_slash_redirects_enabled
+    simple_urls_enabled              = var.simple_urls_enabled
   })
   filename        = "${path.module}/lambda/config.json"
   file_permission = "0644"
