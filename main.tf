@@ -1,5 +1,5 @@
 locals {
-  lambda_version          = "0.3.0"
+  lambda_version          = "0.3.1"
   lambda_filename         = "lambda-edge-azure-auth-${local.lambda_version}.zip"
   lambda_repo             = "https://github.com/nickshine/lambda-edge-azure-auth"
   oidc_discovery_document = "https://login.microsoftonline.com/${var.tenant}/v2.0/.well-known/openid-configuration"
