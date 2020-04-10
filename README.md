@@ -40,6 +40,8 @@ module "lambda-edge-azure-auth" {
 | `session_duration` | Authenticated session duration, in hours | `number` | `168` | no |
 | `tags` | Tags to attach to the lambda | `map(string)` | `{}` | no |
 | `tenant` | Microsoft Azure AD Tenant ID | `string` | | yes |
+| `trailing_slash_redirects_enabled` | Enables 301 redirects for directory paths not ending in a forward slash. e.g. www.example.com/about -> www.example.com/about/ | `bool` | false | no |
+| `simple_urls_enabled` | Appends index.html on to directory paths (e.g. www.example.com/about/ retrieves www.example.com/about/index.html from a backend s3 origin.) | `bool` | true | no |
 
 ## Outputs
 
@@ -77,7 +79,9 @@ Example generated `config.json` (gets added to the lambda package):
   "TENANT": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   "DISCOVERY_DOCUMENT": "https://login.microsoftonline.com/<tenant>/v2.0/.well-known/openid-configuration",
   "SESSION_DURATION": 604800,
-  "CALLBACK_PATH": "/_callback"
+  "CALLBACK_PATH": "/_callback",
+  "TRAILING_SLASH_REDIRECTS_ENABLED": true,
+  "SIMPLE_URLS_ENABLED": true
 }
 ```
 
