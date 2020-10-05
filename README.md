@@ -18,7 +18,7 @@ file based on the configured input variables, packages and then creates the lamb
 ```hcl
 module "lambda-edge-azure-auth" {
   source = "nickshine/lambda-edge-azure-auth/aws"
-  version = "0.1.0"
+  version = "0.3.3"
 
   client_id     = var.client_id
   client_secret = var.client_secret
